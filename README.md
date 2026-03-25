@@ -1,3 +1,3 @@
-# jmfgdev/dotfiles
+# euxaristia/dotfiles
 
 My dotfiles
