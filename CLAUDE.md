@@ -16,6 +16,12 @@
 - Always use `cargo install --path .` for installation instructions in Rust projects instead of manual `mv` or `cp`.
 - Always use the actual username (`euxaristia`) in installation instructions instead of placeholders like `yourusername`.
 
+## Destructive Operations
+- NEVER delete repositories, branches, files, or any other resources without explicitly confirming with the user first — even if the user has clearly expressed intent to delete.
+- Always restate exactly what will be deleted and ask for a final "yes" before executing any deletion command (e.g., `gh repo delete`, `rm -rf`, `git branch -D`).
+- This applies to all destructive operations: GitHub repos, local files/folders, database records, cloud resources, etc.
+- Do not batch deletions without listing every item and getting confirmation for the batch.
+
 ## Security Compliance
 - ALWAYS perform a security audit for every application, particularly those that handle untrusted user data or interact with the internet.
 - Proactively identify vulnerabilities (e.g., authentication holes, authorization bypasses, injection risks).
