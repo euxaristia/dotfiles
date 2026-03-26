@@ -17,6 +17,29 @@
 - Always use `cargo install --path .` for installation instructions in Rust projects instead of manual `mv` or `cp`.
 - Always use the actual username (`euxaristia`) in installation instructions instead of placeholders like `yourusername`.
 
+## Conventional Commits (MANDATORY)
+- ALL commit messages MUST follow the Conventional Commits specification (https://www.conventionalcommits.org/).
+- Format: `<type>(<optional scope>): <description>`
+- Allowed types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`.
+- The description MUST be lowercase, imperative mood, and NOT end with a period.
+- Use a scope when it clarifies what module/area is affected (e.g., `feat(parser): add support for arrays`).
+- Breaking changes MUST include a `!` after the type/scope (e.g., `feat(api)!: remove v1 endpoints`) or a `BREAKING CHANGE:` footer.
+- Examples of CORRECT messages:
+  * `feat(auth): add OAuth2 login flow`
+  * `fix(db): prevent connection leak on timeout`
+  * `refactor: simplify error handling in middleware`
+  * `docs(readme): update installation instructions`
+  * `test(parser): add edge case coverage for empty input`
+  * `chore(deps): bump tokio to 1.35`
+- Examples of WRONG messages (DO NOT USE):
+  * `Update code` (no type, vague)
+  * `Fixed bug` (no type, past tense)
+  * `feat: Add new feature.` (uppercase, ends with period)
+  * `misc changes` (no type, meaningless)
+  * `WIP` (not a valid commit message)
+- Multi-line commit bodies are fine for additional context, but the first line MUST follow the format above.
+- If you are unsure about the type, prefer `fix` for bug fixes, `feat` for new functionality, `refactor` for restructuring without behavior change, and `chore` for everything else.
+
 ## Destructive Operations
 - NEVER delete repositories, branches, files, or any other resources without explicitly confirming with the user first — even if the user has clearly expressed intent to delete.
 - Always restate exactly what will be deleted and ask for a final "yes" before executing any deletion command (e.g., `gh repo delete`, `rm -rf`, `git branch -D`).
