@@ -48,6 +48,7 @@
   * Close any previously created PRs that contain extra commits and replace them with the clean branch.
 - Never push your main branch to create a PR. Always use a feature branch that contains only the necessary commits.
 - If the user asks you to "make a PR," you are responsible for ensuring the branch is clean before pushing.
+- **NEVER add extra commits to an existing PR without explicit instruction.** Once a PR is created, do not push additional commits to its branch for unrelated fixes or improvements. Each PR addresses one thing. If you discover another bug while working on a fix, mention it to the user but do not add it to the current PR.
 
 ## Destructive Operations
 - NEVER delete repositories, branches, files, or any other resources without explicitly confirming with the user first — even if the user has clearly expressed intent to delete.
