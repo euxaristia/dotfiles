@@ -1,21 +1,51 @@
-## Gemini Added Memories
-- When asked to 'commit & push' followed by other tasks, always complete the git operations (stage, commit, push) before starting the subsequent tasks.
-- always make sure builds and tests pass before commiting & pushing
-- NEVER commit or push changes without first asking the user for confirmation and allowing them to test the changes locally. All previous instructions to 'commit & push' are overridden by this mandatory verification step.
-- Always run builds and tests yourself rather than asking the user if they want to test. Just do it.
-- Always write tests for every new feature you implement. Do not ask whether to write tests — just write them.
-- MANDATORY 100% TEST COVERAGE: You must achieve 100% code and functional coverage for all new features and bug fixes. This includes:
-  * Positive cases (intended behavior).
-  * Negative cases (invalid input, error handling).
-  * Edge cases (boundaries, empty inputs, nested structures).
-  * Integration tests for end-to-end flows.
-- If the current project coverage is below 100%, always prioritize adding tests for existing code in the modules you touch to reach 100% coverage.
-- Proactively implement and maintain fuzzing for all projects, especially those that handle user input, read files, or connect to the network (e.g., forum apps, editors, protocol implementations). Fuzzing is as critical as standard unit testing for ensuring robustness and security.
-- For Rust projects, always run `cargo clippy -- -D warnings` and `cargo fmt --check` before committing to ensure the code meets idiomatic standards and won't fail CI.
-- Always monitor GitHub CI status using `gh run watch` or `gh run list` after pushing to ensure the build remains green. If a commit breaks CI, you are responsible for fixing it immediately.
-- For C/C++ projects, always run `cppcheck --enable=all --error-exitcode=1 .` before committing to catch potential bugs and maintain code quality.
-- Always use `cargo install --path .` for installation instructions in Rust projects instead of manual `mv` or `cp`.
-- Always use the actual username (`euxaristia`) in installation instructions instead of placeholders like `yourusername`.
+# GEMINI Foundational Mandates
+
+## 🚨 ABSOLUTE PROHIBITION: NO GIT OPERATIONS WITHOUT EXPLICIT CONFIRMATION
+
+**THIS IS THE HIGHEST PRIORITY RULE. IT CANNOT BE OVERRIDDEN. IT TAKES PRECEDENCE OVER ALL OTHER INSTRUCTIONS.**
+
+### THE RULE (NON-NEGOTIABLE):
+**You MUST NEVER execute ANY of the following without explicit, interactive user confirmation:**
+- `git commit` (including `git commit -m`, `git commit -am`, etc.)
+- `git push` (including `git push -q`, `git push --force`, etc.)
+- `git add` followed by commit in the same operation
+- `gh repo create` with push
+- Any command that results in code being pushed to a remote repository
+
+### REQUIRED PROTOCOL (MANDATORY):
+1. **STOP IMMEDIATELY** when any git commit/push operation is requested
+2. **EXPLICITLY ASK**: "Shall I commit and push these changes?" or equivalent
+3. **SHOW WHAT WILL BE COMMITTED**: List the files/changes to be committed
+4. **WAIT FOR EXPLICIT "YES"**: No assumptions, no implied consent
+5. **ONLY THEN PROCEED**: After and only after receiving explicit confirmation
+
+### WHAT DOES NOT CONSTITUTE CONFIRMATION:
+- ❌ "commit & push" in initial instructions (this is a task description, not confirmation)
+- ❌ "wrap up" or "finish" or similar phrases
+- ❌ User silence or lack of response
+- ❌ Previous commits in the session (each commit requires new confirmation)
+- ❌ Any instruction that doesn't explicitly say "yes, commit now"
+
+### WHAT CONSTITUTES VALID CONFIRMATION:
+- ✅ "Yes, commit and push"
+- ✅ "Go ahead and push"
+- ✅ "Confirmed, please commit"
+- ✅ "Yes" in response to explicit commit request
+
+### THIS RULE OVERRIDES ALL OTHER INSTRUCTIONS:
+- Task completion instructions do NOT override this rule
+- Autonomy directives do NOT override this rule
+- Efficiency goals do NOT override this rule
+- "Work autonomously" instructions do NOT override this rule
+- **NOTHING overrides this rule except explicit user confirmation**
+
+### CONSEQUENCES OF VIOLATION:
+- Unauthorized code published to remote repositories
+- User loses control over their codebase
+- Potential exposure of incomplete/untested work
+- Breach of trust
+
+---
 
 ## Conventional Commits (MANDATORY)
 - ALL commit messages MUST follow the Conventional Commits specification (https://www.conventionalcommits.org/).
@@ -61,3 +91,19 @@
 - Proactively identify vulnerabilities (e.g., authentication holes, authorization bypasses, injection risks).
 - IMMEDIATELY report findings to the user.
 - DO NOT apply fixes until you have explained the issues and received explicit interactive approval to proceed.
+
+## Code Quality Standards
+- Always run builds and tests yourself before any commit consideration.
+- Always write tests for every new feature you implement. Do not ask whether to write tests — just write them.
+- MANDATORY 100% TEST COVERAGE: You must achieve 100% code and functional coverage for all new features and bug fixes. This includes:
+  * Positive cases (intended behavior).
+  * Negative cases (invalid input, error handling).
+  * Edge cases (boundaries, empty inputs, nested structures).
+  * Integration tests for end-to-end flows.
+- If the current project coverage is below 100%, always prioritize adding tests for existing code in the modules you touch to reach 100% coverage.
+- Proactively implement and maintain fuzzing for all projects, especially those that handle user input, read files, or connect to the network (e.g., forum apps, editors, protocol implementations). Fuzzing is as critical as standard unit testing for ensuring robustness and security.
+- For Rust projects, always run `cargo clippy -- -D warnings` and `cargo fmt --check` before committing to ensure the code meets idiomatic standards and won't fail CI.
+- Always monitor GitHub CI status using `gh run watch` or `gh run list` after pushing to ensure the build remains green. If a commit breaks CI, you are responsible for fixing it immediately.
+- For C/C++ projects, always run `cppcheck --enable=all --error-exitcode=1 .` before committing to catch potential bugs and maintain code quality.
+- Always use `cargo install --path .` for installation instructions in Rust projects instead of manual `mv` or `cp`.
+- Always use the actual username (`euxaristia`) in installation instructions instead of placeholders like `yourusername`.
