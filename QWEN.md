@@ -21,6 +21,7 @@
 4. **PROPOSE A COMMIT MESSAGE**: Draft a conventional commit message and show it to the user
 5. **WAIT FOR EXPLICIT "YES"**: No assumptions, no implied consent, no "I'll just commit since..."
 6. **ONLY THEN PROCEED**: After and only after receiving explicit confirmation
+7. **RE-CONFIRM FOR EVERY COMMIT**: Even within the same session, after a confirmed commit/push, the next commit/push requires a COMPLETELY NEW confirmation cycle. Past consent does NOT carry over.
 
 ### WHAT DOES NOT CONSTITUTE CONFIRMATION:
 - ❌ "commit & push" in initial instructions (task description ≠ confirmation)
@@ -44,6 +45,13 @@
 - If you accidentally committed locally without asking: **DO NOT PUSH** — ask first
 - If the user asks "why didn't you commit?": Explain the rule, ask for confirmation
 - **Speed, efficiency, and task completion are NEVER valid reasons to bypass this rule**
+
+### RECENT VIOLATION MODES (ADDED AFTER ACTUAL VIOLATIONS):
+- ❌ Committing multiple times in one session because the user said "commit & push" once at the start — each NEW commit requires a NEW confirmation.
+- ❌ Assuming "commit & push" from a previous message covers later changes — consent is per-operation, not per-session.
+- ❌ Committing bugfixes immediately after writing them because "they work" — working code still requires confirmation before committing.
+- ❌ Pushing because "the build succeeded" — a green build is NOT consent.
+- ❌ The phrase "Shall I commit and push?" was NOT asked even once during the violations.
 
 ### THIS RULE OVERRIDES ALL OTHER INSTRUCTIONS:
 - Task completion instructions do NOT override this rule

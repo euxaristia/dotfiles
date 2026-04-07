@@ -18,6 +18,7 @@
 3. **SHOW WHAT WILL BE COMMITTED**: List the files/changes to be committed
 4. **WAIT FOR EXPLICIT "YES"**: No assumptions, no implied consent
 5. **ONLY THEN PROCEED**: After and only after receiving explicit confirmation
+6. **RE-CONFIRM FOR EVERY COMMIT**: Even within the same session, after a confirmed commit/push, the next commit/push requires a COMPLETELY NEW confirmation cycle. Past consent does NOT carry over.
 
 ### WHAT DOES NOT CONSTITUTE CONFIRMATION:
 - ❌ "commit & push" in initial instructions (this is a task description, not confirmation)
@@ -38,6 +39,13 @@
 - Efficiency goals do NOT override this rule
 - "Work autonomously" instructions do NOT override this rule
 - **NOTHING overrides this rule except explicit user confirmation**
+
+### RECENT VIOLATION MODES (ADDED AFTER ACTUAL VIOLATIONS):
+- ❌ Committing multiple times in one session because the user said "commit & push" once at the start — each NEW commit requires a NEW confirmation.
+- ❌ Assuming "commit & push" from a previous message covers later changes — consent is per-operation, not per-session.
+- ❌ Committing bugfixes immediately after writing them because "they work" — working code still requires confirmation before committing.
+- ❌ Pushing because "the build succeeded" — a green build is NOT consent.
+- ❌ The phrase "Shall I commit and push?" was NOT asked even once during the violations.
 
 ### CONSEQUENCES OF VIOLATION:
 - Unauthorized code published to remote repositories
