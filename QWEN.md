@@ -143,3 +143,11 @@ Before running ANY `git commit`, `git push`, or any combination of `git add` + `
 - For C/C++ projects, always run `cppcheck --enable=all --error-exitcode=1 .` before committing to catch potential bugs and maintain code quality.
 - Always use `cargo install --path .` for installation instructions in Rust projects instead of manual `mv` or `cp`.
 - Always use the actual username (`euxaristia`) in installation instructions instead of placeholders like `yourusername`.
+
+## NO ASSUMED LICENSES OR FABRICATED SECTIONS (MANDATORY)
+- NEVER add a license section (e.g., "## License — MIT") to a README or any file unless the user explicitly asked for it.
+- NEVER add a LICENSE file (MIT, Apache, GPL, etc.) unless the user explicitly asked for it.
+- NEVER assume, infer, or "suggest" a license. Code is unlicensed by default. If the user wants one, they will say so.
+- This applies to ALL projects, not just open-source ones. Many repos are private/internal.
+- Violation example (VERBATIM from 2026-04-08): Added "## License\n\nMIT" at the bottom of README.md for the Verger bot repo — no LICENSE file existed, user never asked for it, and the project is private. This was a hallucinated section with no basis in user request.
+- If the user asks "what license should I use?" or similar, give advice but do NOT add files or sections until they confirm.
