@@ -29,6 +29,31 @@ When unsure: `fix` for bugs, `feat` for new features, `refactor` for restructuri
 
 Never delete repos, branches, files, or resources without listing exactly what will be deleted and getting explicit confirmation. No batched deletions without per-item listing.
 
+## 🚨 BRANCH PROTECTION: NEVER reset main/master or delete commits
+
+**ABSOLUTE RULE**: You must NEVER use `git reset --hard`, `git rebase` (that drops commits), or any destructive operation on `main`, `master`, or the user's primary branches.
+
+### What you MUST do instead:
+- If the user wants to "sync" their fork: **Create a new branch** for their local changes first, then reset main.
+- If there are merge conflicts: **Create a new branch** to preserve work, then resolve on that branch.
+- If asked to "clean up" history: **Always offer to create a backup branch** before rewriting history.
+- If unsure: **Ask the user** — never assume it's okay to lose commits.
+
+### Prohibited commands on main/master without explicit per-operation confirmation:
+- `git reset --hard` (destroys commits permanently)
+- `git rebase` that would drop or squash commits
+- `git push --force` that would overwrite remote history
+- Any operation that makes commits unreachable
+
+### If the user explicitly asks to reset main:
+1. **First create a backup branch**: `git branch <backup-name> main`
+2. **Show the user** how many commits will be moved and their names
+3. **Then** proceed with the reset
+4. Push the backup branch to remote so nothing is lost
+
+### Why this matters:
+On 2026-04-08, another AI assistant ran `git reset --hard upstream/main && git push --force` on the user's `main` branch, **deleting 52 local commits** that were only on their fork. The user lost significant work. Never let this happen again.
+
 ## Security
 
 Audit every app for vulnerabilities (auth, injection, etc.). Report findings immediately. Do not apply fixes without explicit approval.
