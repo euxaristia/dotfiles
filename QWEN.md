@@ -44,6 +44,51 @@ NEVER delete repos, branches, files, or resources without explicit confirmation.
 ## 🚨 BRANCH PROTECTION: NEVER reset main/master
 NEVER use `git reset --hard`, destructive `git rebase`, or `git push --force` on main/master. Always offer backup branch first. On 2026-04-08, an AI deleted 52 commits this way.
 
+### Sync / Merge-Cleanup Safety
+**Problem:** A GitHub "Sync fork" merge commit pulls in upstream commits with new SHAs. Removing it via interactive rebase leaves the branch with duplicated commits (same content, different hashes) — `git log upstream/main..HEAD` shows many commits that are already in upstream but with different SHAs.
+
+**Correct procedure to clean up after a sync:**
+1. `git fetch upstream`
+2. `git log --oneline upstream/main..HEAD` — list ALL unique commits on main not in upstream
+3. Save that list. Every one must be cherry-picked back after reset.
+4. `git branch backup-main-before-cleanup`
+5. `git checkout upstream/main -B main` — clean base
+6. Cherry-pick each saved unique commit in order
+7. `git push -f origin main` only after all unique commits are restored
+
+**NEVER** do `git reset --hard upstream/main` without first cataloguing unique commits. You will lose them and have to recover via reflog. Violation 2026-04-10: reset main to upstream/main, lost 2 bun commits, had to manually recover from orphaned SHAs.
+
+### 🚨 FULL INCIDENT REPORT: 2026-04-10 Git History Disaster
+
+**What happened:** The user had a forked repo with ~16 commits ahead of upstream (on main) plus several feature branches. The user asked to clean up a "Sync fork" merge commit. The AI made a cascade of mistakes:
+
+1. **Attempted to remove the merge commit** via `git rebase -i` → this created duplicate commits (upstream commits with new SHAs), making main look "behind upstream" when it wasn't.
+2. **Reset main to `upstream/main`** to fix the duplication → this nuked ALL user's unique commits from main that weren't in upstream.
+3. **Recovered only 2 of 5 unique commits** (bun runtime, shebang fix) initially → missed the Rust file search series (4 commits) and a vscode fix.
+4. **Deleted a feature branch** (`fix/quote-input-lag`) thinking it was merged → that commit was only on the deleted branch, not in upstream.
+5. **Recovered more commits** when the user asked — the resume dialog commits were brought back via cherry-pick from reflog.
+
+**Final tally of commits lost from main:**
+- `refactor(file-search-rs): remove unused load_gitignore method`
+- `fix(core): improve Rust file search crawl performance`
+- `refactor(build): add clear status messages for Rust file search module`
+- `feat(core): add Rust-accelerated file search via napi-rs`
+- `fix(vscode-ide-companion): add missing esbuild-plugin-wasm dependency`
+- `fix(cli): remove quote-based drag detection to prevent input lag` (branch was deleted)
+
+**Commits recovered (via cherry-pick from reflog/orphaned SHAs):**
+- bun runtime support + shebang fix
+- resume dialog + /res alias
+- benchmark/profiling scripts
+
+**LESSONS:**
+1. **NEVER reset main to upstream without first listing ALL unique commits** and verifying each one gets cherry-picked back.
+2. **Rebase of a merge commit is DANGEROUS** — it rewrites SHAs and creates duplicates. The right approach for sync cleanup: reset to upstream/main and cherry-pick the unique commits you identified in step 1.
+3. **Check ALL branches before deleting** — a branch's commits may have been merged into main but NOT into upstream. Deleting the branch removes the last record of that work.
+4. **Feature branch commits ≠ main commits** — commits on `fix/slash-command-queue` etc. were not on main, but their duplicates with different SHAs were. Verify with `git branch --contains <sha>`.
+5. **After ANY git reset, verify with `git log upstream/main..HEAD`** that all expected unique commits are present. If the count is wrong, stop and investigate immediately.
+6. **A backup branch is not optional** — it's mandatory before any destructive git operation.
+
 ## Security Compliance
 Always audit for vulnerabilities. Report findings immediately. Don't apply fixes without explicit approval.
 
