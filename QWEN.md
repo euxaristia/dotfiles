@@ -225,19 +225,14 @@ The correct action was: check the TypeScript types (`.d.ts`) and npm metadata on
 - This rule applies to ALL internet sources — not just npm. GitHub raw files, CDNs, APIs, everything.
 
 ## Qwen Added Memories
-- When committing to upstream repositories (especially Google open source projects like gemini-cli), NEVER use `--co-author` or `Co-authored-by:` trailers. Qwen Code auto-injects a `Co-authored-by: Qwen-Coder <qwen-coder@alibabacloud.com>` trailer which violates upstream CLA standards and will break contribution acceptance. To avoid this, always use `git commit -F <file>` instead of `git commit -m` to bypass Qwen's internal commit message processing.
-- ALWAYS ensure 100% test coverage for any code written or modified. Every function, method, branch, edge case, and error path must have corresponding tests. This includes: positive cases (intended behavior), negative cases (invalid input, error handling), edge cases (boundaries, empty inputs, nested structures), and integration tests for end-to-end flows. Never ask whether to write tests — just write them. If coverage is below 100%, prioritize adding tests for existing code in the modules being touched to reach 100% coverage.
-- PR Quality Standard: Every PR must meet these criteria or it will be rejected in favor of a better implementation:
-
-1. **Tests are mandatory** — No PR without tests. Every feature or fix must include tests covering: happy path, error path, edge cases, and interaction with existing behavior. For CLI changes, include smoketests or integration tests. PR #4772 was rejected partly because it had zero tests while the competing PR #4770 had 3 comprehensive smoketests.
-
-2. **Fix related bugs in the same area** — If you touch code that has existing bugs nearby, fix them too. PR #4770 fixed a pre-existing bug (`--yes` not working with child-database deletion: `force || y_or_n(false, ...)`) that PR #4772 left broken.
-
-3. **Better UX than the minimum** — Go beyond the basic requirement. PR #4770 showed both name AND identity in the delete prompt (`mydb (0xabc...)`), while #4772 just showed the name. Small UX improvements matter.
-
-4. **PR description quality** — Include a "History note" tracing the original commits when relevant. List actual commands run for testing, not empty `[ ]` checkboxes. The body should demonstrate you actually ran the tests.
-
-5. **Address all reviewer/bot comments** — Before pushing, resolve every comment. P1 issues are blocking. Don't push until clippy, tests, and all automated reviews are clean.
-
-6. **Scope completeness** — If an issue mentions multiple scenarios (e.g., "delete with children", "delete with --yes"), cover ALL of them. A minimal change that misses edge cases will be superseded.
+- **Upstream commits (gemini-cli etc):** NEVER use `--co-author` or `Co-authored-by:` trailers. Qwen auto-injects them which violates upstream CLA standards. Use `git commit -F <file>` to bypass Qwen's commit message processing.
+- **100% test coverage:** Every function, method, branch, edge case, error path. If project coverage < 100%, prioritize existing code in touched modules.
+- **100% tests MUST PASS:** Writing tests is not enough — you MUST run them and verify they all pass before claiming coverage. A "100% coverage" claim with failing tests is worthless. Always run `npm test` / `cargo test` / `vitest` (whatever the project uses) and confirm zero failures before declaring done. Violation 2026-04-10: claimed "100% coverage" for Rust file search rewrite while 7 of 27 tests were failing; had to iterate multiple rounds to actually get them passing.
+- **PR Quality Standard** (lesson from PR #4772 rejected for #4770):
+  1. Tests mandatory (happy path, error path, edge cases, interaction). CLI: smoketests/integration tests.
+  2. Fix related bugs in same area.
+  3. Better UX than minimum.
+  4. PR description: include "History note", actual test commands (not empty checkboxes).
+  5. Address all reviewer/bot comments. P1 blocking. Clean clippy + tests.
+  6. Scope completeness — cover ALL scenarios mentioned in issue.
 - My dotfiles repo is at ~/Projects/dotfiles/ — use when I ask for dotfiles changes
