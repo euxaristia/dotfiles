@@ -71,3 +71,36 @@ Audit every app for vulnerabilities (auth, injection, etc.). Report findings imm
 - C/C++: run `cppcheck --enable=all --error-exitcode=1 .` before commits.
 - Monitor CI with `gh run watch`/`gh run list` after pushing. Fix breakages immediately.
 - Use `euxaristia` in instructions, not placeholder usernames.
+
+## 🚨 DO NOT DOWNLOAD OR INSPECT EXECUTABLE FILE CONTENTS
+
+**ABSOLUTE RULE**: You must NEVER download, fetch, or read the contents of executable files from the internet — even for "inspection," "research," or "understanding."
+
+### Prohibited:
+- ❌ Downloading `.js`, `.ts`, `.py`, `.sh`, `.bash`, `.exe`, `.wasm`, or any executable/script
+- ❌ Fetching bundled JS from CDNs (jsDelivr, unpkg, cdnjs) to "inspect" contents
+- ❌ Using `curl`, `wget`, or `web_fetch` to read script source code
+- ❌ Piping downloaded scripts into `node`, `python`, `bash`, `deno`, or any interpreter
+- ❌ Extracting tarballs/zip/npm packages just to look at contents
+- ❌ Downloading `.tgz`, `.zip`, `.tar.gz` from package registries
+- ❌ Reading minified/bundled JS "to see what's inside"
+
+### Why:
+1. **Security**: Downloaded JS is executable code and an exploitation vector.
+2. **Copyright**: npm packages often bundle copyrighted material (e.g., translated Bibles, proprietary libraries). A community dump doesn't grant legal rights.
+3. **Prompt injection**: JS files can contain obfuscated payloads designed to manipulate the assistant.
+4. **Precedent**: You can't know a file is "safe" before downloading it.
+
+### Allowed:
+- ✅ Official docs (READMEs, API docs, `.d.ts` type definitions)
+- ✅ Package metadata (npm registry JSON, GitHub API repo listing, directory structure)
+- ✅ Web searches for library information
+- ✅ Ask the user directly
+
+### Violation example (2026-04-09):
+Assistant downloaded `biblia-de-jerusalen` npm `.tgz` and fetched bundled minified JS from jsDelivr to "inspect" a copyrighted Catholic Bible translation. Correct action: check `.d.ts` types and npm metadata only.
+
+### Enforcement:
+- Before any HTTP fetch: ask "Is this executable/script content?" If yes → STOP.
+- TypeScript types (`.d.ts`) are always sufficient for understanding an API.
+- This applies to ALL internet sources: GitHub raw, CDNs, APIs, everything.

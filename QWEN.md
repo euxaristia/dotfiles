@@ -176,3 +176,54 @@ On 2026-04-08, another AI assistant ran `git reset --hard upstream/main && git p
 - This applies to ALL projects, not just open-source ones. Many repos are private/internal.
 - Violation example (VERBATIM from 2026-04-08): Added "## License\n\nMIT" at the bottom of README.md for the Verger bot repo — no LICENSE file existed, user never asked for it, and the project is private. This was a hallucinated section with no basis in user request.
 - If the user asks "what license should I use?" or similar, give advice but do NOT add files or sections until they confirm.
+
+## 🚨 DO NOT DOWNLOAD OR INSPECT EXECUTABLE FILE CONTENTS
+
+**ABSOLUTE RULE**: You must NEVER download, fetch, or read the contents of executable files from the internet — even for "inspection," "research," or "understanding."
+
+### What is prohibited:
+- ❌ Downloading `.js`, `.ts`, `.py`, `.sh`, `.bash`, `.exe`, `.wasm`, or any executable/script file
+- ❌ Fetching bundled JS from CDNs (e.g., jsDelivr, unpkg, cdnjs) to "inspect" its contents
+- ❌ Using `curl`, `wget`, `web_fetch`, or any HTTP tool to read script source code
+- ❌ Piping downloaded JS/scripts into `node`, `python`, `bash`, `deno`, or any interpreter
+- ❌ Extracting tarballs, zips, or npm packages just to look at their contents
+- ❌ Downloading `.tgz`, `.zip`, `.tar.gz` files from package registries (npm, PyPI, crates.io, etc.)
+- ❌ Reading minified/bundled JS from npm packages "to see what's inside"
+- ❌ Any chain of actions that results in executable code being on disk or in memory
+
+### Why this matters:
+1. **Security**: Downloaded JS is executable code. Even reading it means it's on your machine and could be a vector for exploitation.
+2. **Copyright**: Many npm packages bundle copyrighted material (e.g., translated Bible texts, proprietary libraries). Downloading and reading them means you've now possessed copyrighted content you have no license for. A community member dumping copyrighted text into an npm package doesn't make it legal to use.
+3. **Prompt injection**: JS files can contain obfuscated code, prompt injections, or malicious payloads designed to manipulate the assistant.
+4. **Precedent**: You can't know if a file is "safe" before downloading it. By the time you realize it's malicious/copyrighted, you've already downloaded it.
+
+### What you CAN do instead:
+- ✅ Read official documentation (READMEs, API docs, type definitions like `.d.ts` files)
+- ✅ Inspect package metadata (npm registry JSON, GitHub API repo listing, file names/directory structure)
+- ✅ Read TypeScript interface/type definitions (`.d.ts`) — these are not executable
+- ✅ Search the web for information about a library or API
+- ✅ Ask the user directly about what they want instead of hunting for data
+
+### Concrete violation example (VERBATIM from 2026-04-09):
+The assistant was looking for a Spanish Catholic Bible translation. Instead of accepting the VULG fallback or suggesting alternatives, the assistant:
+1. Downloaded the `biblia-de-jerusalen` npm package `.tgz` via `curl | tar -tzf -`
+2. Fetched and read 1000 bytes of bundled minified JavaScript from jsDelivr (`biblia-de-jerusalen.es.js`)
+3. All to "inspect" a bundled Catholic Bible translation that is copyrighted material.
+The correct action was: check the TypeScript types (`.d.ts`) and npm metadata only, which was sufficient to answer the question.
+
+### What constitutes "executable file" for this rule:
+- Any file that can be interpreted as code by a runtime: `.js`, `.ts`, `.tsx`, `.jsx`, `.mjs`, `.cjs`, `.py`, `.sh`, `.bash`, `.rb`, `.php`, `.exe`, `.dll`, `.so`, `.wasm`
+- Any bundled/compiled artifact: `.bundle.js`, `.min.js`, `.esm.js`, `.cjs.js`, `.umd.js`
+- Any compressed archive: `.tgz`, `.tar.gz`, `.zip`, `.7z`, `.rar`
+- Any npm/PyPI/crates package file
+- **NOT executable**: `.json`, `.md`, `.txt`, `.yaml`, `.toml`, `.d.ts` (type definitions), `.html`, `.css`, `.svg`
+
+### Enforcement:
+- Before using `curl`, `wget`, `web_fetch`, or any HTTP tool on a URL, ask: "Is this fetching executable/script content?" If yes → **STOP**.
+- If you feel tempted to "just look at the source" of a JS bundle: **STOP**. The TypeScript types are always sufficient.
+- If an npm package or GitHub repo is the only source of data you need: tell the user and let THEM decide whether to download it.
+- This rule applies to ALL internet sources — not just npm. GitHub raw files, CDNs, APIs, everything.
+
+## Qwen Added Memories
+- When committing to upstream repositories (especially Google open source projects like gemini-cli), NEVER use `--co-author` or `Co-authored-by:` trailers. Qwen Code auto-injects a `Co-authored-by: Qwen-Coder <qwen-coder@alibabacloud.com>` trailer which violates upstream CLA standards and will break contribution acceptance. To avoid this, always use `git commit -F <file>` instead of `git commit -m` to bypass Qwen's internal commit message processing.
+- ALWAYS ensure 100% test coverage for any code written or modified. Every function, method, branch, edge case, and error path must have corresponding tests. This includes: positive cases (intended behavior), negative cases (invalid input, error handling), edge cases (boundaries, empty inputs, nested structures), and integration tests for end-to-end flows. Never ask whether to write tests — just write them. If coverage is below 100%, prioritize adding tests for existing code in the modules being touched to reach 100% coverage.
