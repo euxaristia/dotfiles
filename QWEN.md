@@ -240,4 +240,4 @@ The correct action was: check the TypeScript types (`.d.ts`) and npm metadata on
 5. **Address all reviewer/bot comments** — Before pushing, resolve every comment. P1 issues are blocking. Don't push until clippy, tests, and all automated reviews are clean.
 
 6. **Scope completeness** — If an issue mentions multiple scenarios (e.g., "delete with children", "delete with --yes"), cover ALL of them. A minimal change that misses edge cases will be superseded.
-- My "dotfiles" repo is located at ~/Projects/dotfiles/. This is my dotfiles GitHub repo.
+- My dotfiles repo is at ~/Projects/dotfiles/ — use when I ask for dotfiles changes
