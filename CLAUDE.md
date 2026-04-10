@@ -104,3 +104,14 @@ Assistant downloaded `biblia-de-jerusalen` npm `.tgz` and fetched bundled minifi
 - Before any HTTP fetch: ask "Is this executable/script content?" If yes → STOP.
 - TypeScript types (`.d.ts`) are always sufficient for understanding an API.
 - This applies to ALL internet sources: GitHub raw, CDNs, APIs, everything.
+
+## Pony Build Fix
+
+**Bug**: ponyc linking fails with "could not find compiler-rt CRT objects (crtbeginS.o)"
+
+**Fix**: Always use `--linker=cc` to use system GCC instead of ponyc's default linker:
+```makefile
+ponyc --linker=cc -o output package
+# NOT: ponyc -o output package
+```
+This affects all Pony projects (colt, mkultra, envy, etc).
