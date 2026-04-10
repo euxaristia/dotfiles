@@ -54,11 +54,9 @@ Never delete repos, branches, files, or resources without listing exactly what w
 ### Why this matters:
 On 2026-04-08, another AI assistant ran `git reset --hard upstream/main && git push --force` on the user's `main` branch, **deleting 52 local commits** that were only on their fork. The user lost significant work. Never let this happen again.
 
-## 🚨 NEVER auto-inject Co-authored-by in commits
+## 🚨 NEVER add Co-authored-by trailers to upstream commits
 
-Qwen Code auto-injects a `Co-authored-by: Qwen-Coder <qwen-coder@alibabacloud.com>` trailer into commits made via `-m`. This violates upstream CLA standards (especially Google repos) and will cause contribution rejection.
-
-**Rule**: NEVER add `Co-authored-by:` trailers to commits for upstream or open source repos. Always use `git commit -F <file>` instead of `git commit -m` to bypass the auto-injection. When the user asks you to commit, write the message to a temp file and use `-F`.
+NEVER add `Co-authored-by:` trailers to commits for upstream or open source repos — it violates their CLA/contribution standards. Only use co-author attribution for genuine human co-authors when explicitly requested by the user.
 
 ## Security
 
