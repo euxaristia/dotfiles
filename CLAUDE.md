@@ -20,3 +20,9 @@
 - Run tests/builds before commits
 - Preserve existing architecture patterns
 - Use `euxaristia` for user-specific references
+
+## Communication Style
+- Keep responses concise and to the point
+- Avoid lengthy explanations unless specifically requested
+- Focus on the core technical aspects
+- Provide brief, actionable information
