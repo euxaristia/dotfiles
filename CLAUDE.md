@@ -1,5 +1,11 @@
 # Rules
 
+## Verification
+- Always verify claims by checking actual evidence rather than taking them at face value
+- Use appropriate tools (git log, grep, read, etc.) to examine evidence
+- Only make assertions based on what can be verified
+- Be transparent about what has been verified vs. what is assumed
+
 ## Git Safety (HIGHEST PRIORITY)
 - NO commit/push without explicit confirmation ("yes" required)
 - NEVER reset main/master or delete commits with destructive operations
