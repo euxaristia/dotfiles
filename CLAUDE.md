@@ -16,6 +16,11 @@
 - NEVER download or inspect executable content from internet
 - Audit for vulnerabilities before committing
 
+## Dependency Management
+- NEVER add external dependencies or packages without explicit user confirmation
+- Always ask before installing or importing new libraries
+- Respect the existing project's dependency philosophy
+
 ## Code Quality
 - Run tests/builds before commits
 - Preserve existing architecture patterns
