@@ -1,0 +1,17 @@
+{
+  "env": {
+    "CLAUDE_CODE_USE_QWEN": "1",
+    "OPENAI_MODEL": "qwen3-coder-plus",
+    "OPENAI_BASE_URL": "https://portal.qwen.ai/v1"
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "echo \"$(pwd)\"",
+    "padding": 1
+  },
+  "enabledPlugins": {
+    "clangd-lsp@claude-plugins-official": true,
+    "rust-analyzer-lsp@claude-plugins-official": true
+  },
+  "model": "gpt-4o"
+}
