@@ -55,6 +55,22 @@ Bad: `Update code`, `Fixed bug`, `feat: Add new feature.`, `misc changes`, `WIP`
 - Always use feature branches, never push main. One PR = one concern.
 - Never add extra commits to an existing PR without explicit instruction.
 
+## Never Push to Already-Merged or Closed PRs (HIGHEST PRIORITY)
+
+**ABSOLUTE RULE**: Before pushing to any branch, ALWAYS check if the corresponding PR is still open.
+
+**Protocol**: Before every `git push origin <branch>`:
+1. Run `gh pr view <branch-name> --json state` OR `gh pr list --search "<branch-name>" --json number,state`
+2. If the PR is MERGED or CLOSED, create a **new branch** and a **new PR** instead
+3. If unsure, ask the user
+
+**Never assume** a PR is still open just because you created it earlier in the session. PRs can be merged at any time.
+
+**Not confirmation**: "push to that PR", "update the branch", prior pushes in session.
+**Valid confirmation**: "Push to PR #X" where you've verified PR #X is still open.
+
+On 2026-04-17, an assistant pushed to PRs #8, #10, and #12 after they were already merged, requiring new PRs #9, #13, etc. Never let this happen again.
+
 ## PR Quality Standard
 
 1. Tests mandatory (happy path, error path, edge cases, interaction). CLI: smoketests/integration tests.
