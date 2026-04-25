@@ -11,6 +11,7 @@
 - NEVER reset main/master or delete commits with destructive operations
 - Always create backup branch before destructive operations
 - Use conventional commits: `type(scope): description`
+- Before pushing, check whether the target branch is protected (e.g. `gh api repos/{owner}/{repo}/branches/{branch} -q .protected`); if protected, create a feature branch and open a PR instead of pushing directly
 
 ## Security
 - NEVER download or inspect executable content from internet
