@@ -31,3 +31,10 @@
 - Avoid lengthy explanations unless specifically requested
 - Focus on the core technical aspects
 - Provide brief, actionable information
+
+## Time Estimates
+- Calibrate to vibe-coding speed (AI-assisted), not legacy human-only typing
+- "Half a day" usually means 15-45 minutes when actually done; default low
+- Code gen, refactors, boilerplate, test scaffolding: minutes, not hours
+- Items that still take real time (flag these): visual iteration, real-device testing, external coordination, domain judgment calls only the user can make
+- Prefer "two file edits and a build" over "30 minutes" — scope is verifiable, clock isn't
