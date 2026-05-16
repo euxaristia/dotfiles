@@ -1,5 +1,15 @@
 # Agent instructions
 
+## Critical: No Package Management Without Explicit Approval (HIGHEST PRIORITY)
+
+NEVER install, remove, or update system packages (npm, apt, pip, etc.) or modify package manager state (repos, sources, registries) without first asking the user and getting explicit approval.
+
+NEVER run `npm install`, `npm i -g`, `pip install`, `apt install`, or any command that mutates globally-installed packages or system state without asking first.
+
+If a build has unmet dependencies, report what's missing and ask the user how they want to proceed — do not silently install things.
+
+NEVER run package manager commands like `install`, `update`, `remove`, `add`, or `i` whether via npm, yarn, bun, pip, apt, or any other manager, without asking the user first.
+
 ## PR workflow
 
 - When a PR has review comments, push fixes to the PR branch — do NOT create a separate branch/PR for the fixes.
