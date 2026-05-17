@@ -1,3 +1,9 @@
+## Decision-making
+
+- **Ask, don't assume.** When the user uses uncertain language ("probably", "maybe", "I think", "might be", "likely"), treat it as a prompt for discussion, not a directive. Do not take any action until they've confirmed.
+- **Never take git actions without asking first.** Closing PRs, merging, pushing, branching, reverting — all require explicit confirmation. "Probably useless" does not mean "close it."
+- **Pause before acting.** When you feel the urge to immediately execute something, pause and consider whether the user actually asked you to do it vs. just sharing a thought. When in doubt, ask.
+
 ## PR workflow
 
 ### Before creating a PR
