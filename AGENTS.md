@@ -43,7 +43,7 @@ Focus on why — the user impact and the design intent.>
 -    Manual: <specific scenario tested and expected behavior>
 ```
 
-- Reference related issues: `Fixes #N` or `Refs #N` at the top of the body.
+- Reference related issues: `Fixes #<issue>` or `Refs #<issue>` at the top of the body. Only include this if there is an actual related issue — do not fabricate references.
 - Every commit message must be a complete sentence in imperative mood with a detailed body explaining **why** the change was made, not just what changed. Use `Refs #N` in commit footers.
 - If addressing prior review feedback, add a `## Prior reviewer feedback addressed` section with a checklist:
   ```
@@ -56,8 +56,6 @@ Focus on why — the user impact and the design intent.>
 
 ```
 feat(flatpak): add flatpak update support alongside apt updates
-
-Refs #2
 
 ## Summary
 
